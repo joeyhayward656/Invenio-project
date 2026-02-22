@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard | German Unification Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    min-height:100vh;
+    background: linear-gradient(135deg, #000000, #dd0000, #ffce00);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.container{
+    background:white;
+    width:90%;
+    max-width:900px;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.35);
+    text-align:center;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+h1{
+    margin-bottom:25px;
+    font-weight:800;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid #eee;
+}
+
+th{
+    background:#f3f3f3;
+}
+
+tr:hover{
+    background:#fafafa;
+}
+
+.medal{
+    font-size:20px;
+    display:inline-block;
+    animation: medalPulse 2s infinite;
+}
+
+@keyframes medalPulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.25) rotate(8deg);}
+    100%{transform:scale(1);}
+}
+
+button{
+    margin-top:25px;
+    padding:12px 25px;
+    border:none;
+    border-radius:12px;
+    background:black;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#222;
+}
+
+/* PODIUM OVERLAY */
+
+#podiumOverlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle,#111 20%,#000 80%);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:999;
+    color:white;
+    text-align:center;
+}
+
+.podium{
+    display:flex;
+    align-items:flex-end;
+    gap:40px;
+    margin-top:40px;
+}
+
+.step{
+    width:160px;
+    border-radius:20px 20px 0 0;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
+    transform:rotateX(20deg);
+    opacity:0;
+    animation: rise 1.2s ease-out forwards;
+    padding-top:20px;
+}
+
+.step span{
+    display:block;
+    font-weight:700;
+    margin-top:10px;
+}
+
+.step1{ height:240px; background:gold; color:black; }
+.step2{ height:180px; background:silver; color:black; }
+.step3{ height:150px; background:#cd7f32; color:white; }
+
+@keyframes rise{
+    from{
+        transform:translateY(400px) rotateX(70deg);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0) rotateX(20deg);
+        opacity:1;
+    }
+}
+
+.chocolate{
+    margin-top:30px;
+    font-size:1.5rem;
+}
+</style>
+</head>
+<body>
+
+<div id="podiumOverlay">
+    <h1>🏆 CHAMPIONS 🏆</h1>
+
+    <div class="podium">
+        <div class="step step2" id="secondStep">🥈<span></span></div>
+        <div class="step step1" id="firstStep">🥇<span></span></div>
+        <div class="step step3" id="thirdStep">🥉<span></span></div>
+    </div>
+
+    <div class="chocolate">🍫 Top 3 Win Chocolate! 🍫</div>
+</div>
+
+<div class="container">
+<h1>German Unification Leaderboard</h1>
+
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Username</th>
+<th>Score</th>
+<th id="timeHeader" style="display:none;">Time (s)</th>
+</tr>
+</thead>
+<tbody id="leaderboardBody"></tbody>
+</table>
+
+<button onclick="window.location.href='index.html'">Back to Home</button>
+</div>
+
+<audio id="anthem">
+<source src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Deutschlandlied.ogg" type="audio/ogg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCwDkm3VB3dh1kkZYGw10bGV7DBo9yNjGU",
+  authDomain: "german-unification-quiz.firebaseapp.com",
+  projectId: "german-unification-quiz",
+  storageBucket: "german-unification-quiz.firebasestorage.app",
+  messagingSenderId: "748292475340",
+  appId: "1:748292475340:web:3352e9a590862c20ef7569"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const snapshot = await getDocs(collection(db,"leaderboard"));
+
+let leaderboard = [];
+
+snapshot.forEach(doc=>{
+    leaderboard.push(doc.data());
+});
+
+/* SORT */
+leaderboard.sort((a,b)=>{
+    if(b.score !== a.score) return b.score - a.score;
+    return a.time - b.time;
+});
+
+/* CHECK TIE */
+let tieExists=false;
+for(let i=0;i<leaderboard.length-1;i++){
+    if(leaderboard[i].score === leaderboard[i+1].score){
+        tieExists=true;
+        break;
+    }
+}
+if(tieExists){
+    document.getElementById("timeHeader").style.display="table-cell";
+}
+
+/* DISPLAY TABLE */
+const tbody=document.getElementById("leaderboardBody");
+
+leaderboard.forEach((entry,index)=>{
+
+    let medal="";
+    if(index===0) medal='<span class="medal">🥇</span>';
+    if(index===1) medal='<span class="medal">🥈</span>';
+    if(index===2) medal='<span class="medal">🥉</span>';
+
+    const row=document.createElement("tr");
+
+    row.innerHTML=`
+        <td>${index+1}</td>
+        <td>${medal} ${entry.username}</td>
+        <td>${entry.score}</td>
+        ${tieExists?`<td>${entry.time}</td>`:''}
+    `;
+
+    tbody.appendChild(row);
+});
+
+/* SHOW PODIUM IF CURRENT USER TOP 3 */
+const currentUser = localStorage.getItem("quizUsername");
+
+const userRank = leaderboard.findIndex(
+    entry => entry.username === currentUser
+) + 1;
+
+if(userRank>0 && userRank<=3){
+
+    document.getElementById("podiumOverlay").style.display="flex";
+
+    document.getElementById("firstStep").querySelector("span").innerText = leaderboard[0]?.username || "";
+    document.getElementById("secondStep").querySelector("span").innerText = leaderboard[1]?.username || "";
+    document.getElementById("thirdStep").querySelector("span").innerText = leaderboard[2]?.username || "";
+
+    document.getElementById("anthem").play();
+
+    const duration=4000;
+    const end=Date.now()+duration;
+
+    (function frame(){
+        confetti({
+            particleCount:8,
+            spread:70,
+            origin:{x:Math.random(),y:Math.random()-0.2}
+        });
+        if(Date.now()<end){
+            requestAnimationFrame(frame);
+        }
+    })();
+
+    setTimeout(()=>{
+        document.getElementById("podiumOverlay").style.display="none";
+    },5000);
+}
+
+</script>
+
+</body>
+</html>

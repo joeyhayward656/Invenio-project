@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>German Unification | Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg, #000000, #dd0000, #ffce00);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    background:white;
+    width:90%;
+    max-width:750px;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    text-align:center;
+}
+
+.progress-bar{
+    width:100%;
+    height:10px;
+    background:#eee;
+    border-radius:20px;
+    margin-bottom:25px;
+    overflow:hidden;
+}
+
+.progress{
+    height:100%;
+    width:0%;
+    background:#dd0000;
+    transition:width 0.4s ease;
+}
+
+.question{
+    font-size:18px;
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+.option{
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.option:hover{ background:#f2f2f2; }
+
+.correct{
+    background:#4CAF50 !important;
+    color:white;
+}
+
+.wrong{
+    background:#e53935 !important;
+    color:white;
+}
+
+.explanation{
+    margin-top:15px;
+    font-size:14px;
+    color:#444;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:#000;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* CERTIFICATE */
+.certificate{
+    padding:40px;
+    border:10px solid;
+    border-radius:15px;
+    margin-top:20px;
+}
+
+.gold{ border-color:#FFD700; }
+.silver{ border-color:#C0C0C0; }
+.bronze{ border-color:#CD7F32; }
+.default{ border-color:#333; }
+
+@media print{
+    body{ background:white; }
+    .no-print{ display:none; }
+    .certificate{ box-shadow:none; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainContent">
+    <h1 id="welcome"></h1>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="question" id="question"></div>
+    <div id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Next Question</button>
+</div>
+
+<script src="questions.js"></script>
+
+<script>
+const username = localStorage.getItem("quizUsername") || "Student";
+document.getElementById("welcome").innerText = "Welcome, " + username;
+
+let current = 0;
+let score = 0;
+let startTime = Date.now();
+
+function updateProgress(){
+    const percent = (current / questions.length) * 100;
+    document.getElementById("progress").style.width = percent + "%";
+}
+
+function loadQuestion(){
+    updateProgress();
+
+    const q = questions[current];
+    document.getElementById("question").innerText =
+        "Question " + (current+1) + " of " + questions.length + ": " + q.q;
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+    document.getElementById("explanation").innerText = "";
+    document.getElementById("nextBtn").style.display = "none";
+
+    q.options.forEach((opt,index)=>{
+        const div = document.createElement("div");
+        div.classList.add("option");
+        div.innerText = opt;
+        div.onclick = () => checkAnswer(div,index);
+        optionsDiv.appendChild(div);
+    });
+}
+
+function checkAnswer(selectedDiv,index){
+    const q = questions[current];
+    const options = document.querySelectorAll(".option");
+
+    options.forEach(opt => opt.onclick = null);
+
+    if(index === q.answer){
+        selectedDiv.classList.add("correct");
+        score++;
+    } else {
+        selectedDiv.classList.add("wrong");
+        options[q.answer].classList.add("correct");
+    }
+
+    document.getElementById("explanation").innerText = q.explanation;
+    document.getElementById("nextBtn").style.display = "inline-block";
+}
+
+function nextQuestion(){
+    current++;
+    if(current < questions.length){
+        loadQuestion();
+    } else {
+        finishQuiz();
+    }
+}
+
+function finishQuiz(){
+    document.getElementById("progress").style.width = "100%";
+
+    const totalTime = Math.floor((Date.now() - startTime) / 1000);
+
+    showConfetti();
+    showCertificate();
+
+    setTimeout(()=>{
+        saveToFirebase(score, totalTime);
+    },2000);
+}
+
+function showCertificate(){
+
+    document.getElementById("mainContent").innerHTML = `
+        <div class="certificate default">
+            <h1>Certificate of Achievement</h1>
+            <p>This certifies that</p>
+            <h2>${username}</h2>
+            <p>has successfully completed the German Unification Academic Quiz</p>
+            <p>Score: ${score}/${questions.length}</p>
+            <p>Date: ${new Date().toLocaleDateString()}</p>
+        </div>
+
+        <div class="no-print">
+            <button onclick="window.print()">Print Certificate</button>
+        </div>
+    `;
+}
+
+/* SIMPLE CONFETTI */
+function showConfetti(){
+    for(let i=0;i<100;i++){
+        const conf = document.createElement("div");
+        conf.style.position="fixed";
+        conf.style.width="8px";
+        conf.style.height="8px";
+        conf.style.background=["#FFD700","#C0C0C0","#CD7F32","#dd0000","#ffce00"][Math.floor(Math.random()*5)];
+        conf.style.left=Math.random()*window.innerWidth+"px";
+        conf.style.top="-10px";
+        conf.style.borderRadius="50%";
+        document.body.appendChild(conf);
+
+        conf.animate([{transform:"translateY(0)"},{transform:`translateY(${window.innerHeight}px)`}],
+        {duration:2000,easing:"linear"});
+
+        setTimeout(()=>conf.remove(),2000);
+    }
+}
+
+loadQuestion();
+</script>
+
+<!-- FIREBASE SAVE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCwDkm3VB3dh1kkZYGw10bGV7DBo9yNjGU",
+  authDomain: "german-unification-quiz.firebaseapp.com",
+  projectId: "german-unification-quiz",
+  storageBucket: "german-unification-quiz.firebasestorage.app",
+  messagingSenderId: "748292475340",
+  appId: "1:748292475340:web:3352e9a590862c20ef7569"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.saveToFirebase = async function(score,totalTime){
+
+    const username = localStorage.getItem("quizUsername");
+
+    try{
+        await addDoc(collection(db,"leaderboard"),{
+            username: username,
+            score: score,
+            time: totalTime,
+            timestamp: new Date()
+        });
+
+        window.location.href = "leaderboard.html";
+
+    }catch(error){
+        alert("Error saving score: " + error.message);
+    }
+};
+</script>
+
+</body>
+</html>
