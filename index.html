@@ -17,26 +17,26 @@ body{
     position:relative;
     overflow:hidden;
 
-    /* Royal Animated German Gradient */
+    /* Royal Animated Black-Red-White Gradient */
     background: linear-gradient(
         -45deg,
         #000000,
         #dd0000,
-        #ffce00,
+        #ffffff,
         #000000
     );
     background-size: 400% 400%;
     animation: imperialFlow 18s ease infinite;
 }
 
-/* Smooth flowing animation */
+/* Flow animation */
 @keyframes imperialFlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* Subtle royal glow */
+/* Soft glow */
 body::before{
     content:"";
     position:absolute;
@@ -45,7 +45,7 @@ body::before{
     pointer-events:none;
 }
 
-/* Elegant texture overlay */
+/* Texture */
 body::after{
     content:"";
     position:absolute;
@@ -69,7 +69,7 @@ body::after{
     box-shadow:0 20px 50px rgba(0,0,0,0.35);
     text-align:center;
     position:relative;
-    z-index:1;
+    z-index:2;
 }
 
 h1{
@@ -82,10 +82,6 @@ h1{
     margin:25px 0;
     color:#444;
     line-height:1.6;
-}
-
-h2{
-    margin-bottom:10px;
 }
 
 input{
@@ -141,6 +137,41 @@ button{
     font-size:14px;
     color:#555;
 }
+
+/* ===== CINEMATIC OVERLAY ===== */
+
+.transition-overlay{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 1s ease;
+    z-index:10;
+}
+
+.transition-overlay.active{
+    opacity:1;
+    pointer-events:all;
+}
+
+.transition-text{
+    color:white;
+    font-size:3rem;
+    font-weight:700;
+    letter-spacing:3px;
+    text-align:center;
+    animation: fadePulse 2s ease infinite;
+}
+
+@keyframes fadePulse{
+    0%{ opacity:0.6; }
+    50%{ opacity:1; }
+    100%{ opacity:0.6; }
+}
 </style>
 </head>
 
@@ -169,6 +200,13 @@ The top 3 scorers win a reward! 🍫
 
 </div>
 
+<!-- Cinematic Transition -->
+<div class="transition-overlay" id="transition">
+    <div class="transition-text">
+        Begin the Empire...
+    </div>
+</div>
+
 <script>
 function startQuiz() {
     const username = document.getElementById("username").value.trim();
@@ -179,10 +217,17 @@ function startQuiz() {
     }
 
     localStorage.setItem("quizUsername", username);
-    window.location.href = "quiz.html";
+
+    const overlay = document.getElementById("transition");
+    overlay.classList.add("active");
+
+    setTimeout(() => {
+        window.location.href = "quiz.html";
+    }, 2000);
 }
 </script>
 
 </body>
 </html>
+
 
