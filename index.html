@@ -11,13 +11,53 @@ body{
     margin:0;
     font-family:'Poppins',sans-serif;
     min-height:100vh;
-
-    /* Premium German diagonal gradient */
-    background: linear-gradient(135deg, #000000, #dd0000, #ffce00);
-
     display:flex;
     justify-content:center;
     align-items:center;
+    position:relative;
+    overflow:hidden;
+
+    /* Royal Animated German Gradient */
+    background: linear-gradient(
+        -45deg,
+        #000000,
+        #dd0000,
+        #ffce00,
+        #000000
+    );
+    background-size: 400% 400%;
+    animation: imperialFlow 18s ease infinite;
+}
+
+/* Smooth flowing animation */
+@keyframes imperialFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Subtle royal glow */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.15), transparent 70%);
+    pointer-events:none;
+}
+
+/* Elegant texture overlay */
+body::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 2px,
+        transparent 2px,
+        transparent 8px
+    );
+    pointer-events:none;
 }
 
 .container{
@@ -26,8 +66,10 @@ body{
     max-width:800px;
     padding:50px;
     border-radius:20px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
     text-align:center;
+    position:relative;
+    z-index:1;
 }
 
 h1{
@@ -109,10 +151,9 @@ button{
 <h1>German Unification Quiz</h1>
 
 <div class="info">
-
 <p>
 German Unification was completed in 1871 under the leadership of Otto von Bismarck and the Kingdom of Prussia.
-Through diplomacy and strategic ars, the German states were unified into
+Through diplomacy and strategic wars, the German states were unified into
 one empire. The German Empire was proclaimed at the Palace of Versailles.
 </p>
 </div>
@@ -143,5 +184,5 @@ function startQuiz() {
 </script>
 
 </body>
-
 </html>
+
