@@ -138,20 +138,6 @@ button{
     color:#555;
 }
 
-/* ===== CINEMATIC OVERLAY ===== */
-
-.transition-overlay{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity 1s ease;
-    z-index:10;
-}
 
 .transition-overlay.active{
     opacity:1;
@@ -198,15 +184,6 @@ one empire. The German Empire was proclaimed at the Palace of Versailles.
 The top 3 scorers win a reward! 🍫
 </div>
 
-</div>
-
-<!-- Cinematic Transition -->
-<div class="transition-overlay" id="transition">
-    <div class="transition-text">
-        Begin the Empire...
-    </div>
-</div>
-
 <script>
 function startQuiz() {
     const username = document.getElementById("username").value.trim();
@@ -229,5 +206,6 @@ function startQuiz() {
 
 </body>
 </html>
+
 
 
