@@ -17,7 +17,6 @@ body{
     position:relative;
     overflow:hidden;
 
-    /* Royal Animated Black-Red-White Gradient */
     background: linear-gradient(
         -45deg,
         #000000,
@@ -29,14 +28,12 @@ body{
     animation: imperialFlow 18s ease infinite;
 }
 
-/* Flow animation */
 @keyframes imperialFlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* Soft glow */
 body::before{
     content:"";
     position:absolute;
@@ -45,7 +42,6 @@ body::before{
     pointer-events:none;
 }
 
-/* Texture */
 body::after{
     content:"";
     position:absolute;
@@ -61,7 +57,7 @@ body::after{
 }
 
 .container{
-    background: white;
+    background:white;
     width:90%;
     max-width:800px;
     padding:50px;
@@ -95,9 +91,9 @@ input{
 }
 
 input:focus{
-    border-color:#dd0000;
+    border-color:#000;
     outline:none;
-    box-shadow:0 0 0 3px rgba(221,0,0,0.2);
+    box-shadow:0 0 0 3px rgba(0,0,0,0.15);
 }
 
 button{
@@ -137,27 +133,6 @@ button{
     font-size:14px;
     color:#555;
 }
-
-
-.transition-overlay.active{
-    opacity:1;
-    pointer-events:all;
-}
-
-.transition-text{
-    color:white;
-    font-size:3rem;
-    font-weight:700;
-    letter-spacing:3px;
-    text-align:center;
-    animation: fadePulse 2s ease infinite;
-}
-
-@keyframes fadePulse{
-    0%{ opacity:0.6; }
-    50%{ opacity:1; }
-    100%{ opacity:0.6; }
-}
 </style>
 </head>
 
@@ -184,6 +159,8 @@ one empire. The German Empire was proclaimed at the Palace of Versailles.
 The top 3 scorers win a reward! 🍫
 </div>
 
+</div>
+
 <script>
 function startQuiz() {
     const username = document.getElementById("username").value.trim();
@@ -194,18 +171,9 @@ function startQuiz() {
     }
 
     localStorage.setItem("quizUsername", username);
-
-    const overlay = document.getElementById("transition");
-    overlay.classList.add("active");
-
-    setTimeout(() => {
-        window.location.href = "quiz.html";
-    }, 2000);
+    window.location.href = "quiz.html";
 }
 </script>
 
 </body>
 </html>
-
-
-
