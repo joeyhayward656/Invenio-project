@@ -14,13 +14,7 @@ const questions = [
     difficulty: "easy",
     explanation: "Prussia and Bavaria were two of the most powerful German kingdoms before unification."
   },
-  {
-    q: "Which smaller German kingdoms existed before unification?",
-    options: ["Saxony and Württemberg", "Portugal and Naples", "Belgium and Holland", "Poland and Denmark"],
-    answer: 0,
-    difficulty: "easy",
-    explanation: "Saxony and Württemberg were among the smaller German kingdoms before 1871."
-  },
+
   {
     q: "Which two powers dominated the German Confederation?",
     options: ["France and Britain", "Austria and Prussia", "Russia and Italy", "Spain and Austria"],
@@ -28,13 +22,7 @@ const questions = [
     difficulty: "easy",
     explanation: "Austria and Prussia were the two dominant powers within the German Confederation."
   },
-  {
-    q: "Why were the small German states considered vulnerable after the Napoleonic Era?",
-    options: ["They lacked strong militaries", "They had no population", "They were colonies", "They were wealthy"],
-    answer: 0,
-    difficulty: "medium",
-    explanation: "Many small states lacked strong military protection, making them vulnerable to larger European powers."
-  },
+
   {
     q: "How did Napoleon’s policies affect German nationalism?",
     options: ["They weakened unity", "They encouraged a shared identity", "They ended trade", "They divided Prussia"],
@@ -56,13 +44,7 @@ const questions = [
     difficulty: "medium",
     explanation: "Shared language and culture encouraged the growth of German nationalism."
   },
-  {
-    q: "What was the purpose of the German Confederation created in 1815?",
-    options: ["Promote unity and defense", "Create colonies", "End trade", "Support France"],
-    answer: 0,
-    difficulty: "medium",
-    explanation: "The Confederation aimed to provide collective security and cooperation among German states."
-  },
+  
   {
     q: "Which meeting reorganized Central Europe after Napoleon’s defeat?",
     options: ["Congress of Vienna", "Treaty of Versailles", "Berlin Conference", "Congress of Berlin"],
@@ -78,20 +60,8 @@ const questions = [
     difficulty: "easy",
     explanation: "The German Confederation was formed in 1815 at the Congress of Vienna."
   },
-  {
-    q: "What was the Diet of Frankfurt?",
-    options: ["A parliament of the German Confederation", "A battle", "A trade agreement", "A war treaty"],
-    answer: 0,
-    difficulty: "medium",
-    explanation: "The Diet of Frankfurt was the central assembly representing the German Confederation."
-  },
-  {
-    q: "Why did Austria hold influence within the Confederation?",
-    options: ["It was the largest power", "It controlled France", "It owned colonies", "It had no rivals"],
-    answer: 0,
-    difficulty: "medium",
-    explanation: "Austria was historically powerful and led the Confederation."
-  },
+
+
   {
     q: "What was the main goal of the Congress of Vienna regarding Central Europe?",
     options: ["Restore balance of power", "Expand France", "Create colonies", "Unite Germany immediately"],
@@ -99,68 +69,11 @@ const questions = [
     difficulty: "medium",
     explanation: "The Congress aimed to restore stability and balance after Napoleon."
   },
-  {
-    q: "Why was military strengthening slow after 1815?",
-    options: ["Desire for peace", "Lack of soldiers", "Economic collapse", "French control"],
-    answer: 0,
-    difficulty: "hard",
-    explanation: "European powers prioritized peace and stability after years of war."
-  },
+  
 
 
 
-  {
-    q: "What role did Prussia play in economic integration?",
-    options: ["Led customs union efforts", "Opposed trade", "Supported France", "Left the Confederation"],
-    answer: 0,
-    difficulty: "medium",
-    explanation: "Prussia led economic cooperation that strengthened German unity."
-  },
-  {
-    q: "What was the Zollverein?",
-    options: ["A military alliance", "A customs union", "A constitution", "A royal marriage"],
-    answer: 1,
-    difficulty: "easy",
-    explanation: "The Zollverein was a customs union that removed internal trade barriers among German states."
-  },
-  {
-    q: "Why was the Zollverein important for unification?",
-    options: ["It united armies", "It strengthened economic ties", "It ended monarchy", "It expanded colonies"],
-    answer: 1,
-    difficulty: "hard",
-    explanation: "Economic unity through free trade helped promote political unity."
-  },
 
-
-
-  {
-    q: "What was the Frankfurt Parliament of 1848?",
-    options: ["A Prussian army council", "An Austrian reform movement", "An assembly to create a unified German constitution", "A military alliance"],
-    answer: 2,
-    difficulty: "medium",
-    explanation: "The Frankfurt Parliament was an attempt to create a unified German constitution."
-  },
-  {
-    q: "Why did Frederick William IV reject the imperial crown?",
-    options: ["He feared Austria", "He refused a crown offered by a parliament", "He disliked nationalism", "He supported France"],
-    answer: 1,
-    difficulty: "hard",
-    explanation: "He rejected the crown because it was offered by a parliament rather than monarchs."
-  },
-  {
-    q: "What did the liberals want in 1848?",
-    options: ["Absolute monarchy", "Colonial expansion", "Constitutional government and national unity", "Austrian dominance"],
-    answer: 2,
-    difficulty: "medium",
-    explanation: "Liberals wanted constitutional government and German unity."
-  },
-  {
-    q: "What was the Punctation of Olmütz (1850)?",
-    options: ["Prussia backed down to Austria", "A war treaty with France", "A Zollverein agreement", "A Danish alliance"],
-    answer: 0,
-    difficulty: "hard",
-    explanation: "Prussia accepted Austrian dominance."
-  },
   {
     q: "Why did Austria oppose Prussian leadership in 1849?",
     options: ["Religious reasons", "Fear of losing influence in Germany", "Economic collapse", "French pressure"],
@@ -176,7 +89,7 @@ const questions = [
     explanation: "Unification shifted toward military leadership under Prussia."
   },
 
-  /* ⚔️ Wars */
+
 
   {
     q: "What triggered the Second Schleswig War (1864)?",
@@ -192,13 +105,7 @@ const questions = [
     difficulty: "easy",
     explanation: "Schleswig and Holstein were the contested duchies."
   },
-  {
-    q: "Which country allied with Prussia in 1866?",
-    options: ["France", "Russia", "Italy", "Britain"],
-    answer: 2,
-    difficulty: "easy",
-    explanation: "Italy allied with Prussia."
-  },
+
   {
     q: "What nickname is given to the Austro-Prussian War?",
     options: ["Seven Weeks’ War", "Iron War", "German Civil War", "Northern Conflict"],
@@ -212,13 +119,6 @@ const questions = [
     answer: 2,
     difficulty: "medium",
     explanation: "Prussia used modern rifles and rail transport."
-  },
-  {
-    q: "What happened to the German Confederation after 1866?",
-    options: ["It expanded", "It was dissolved", "France controlled it", "Austria strengthened it"],
-    answer: 1,
-    difficulty: "medium",
-    explanation: "It was dissolved."
   },
 
   {
@@ -258,6 +158,7 @@ const questions = [
     difficulty: "easy",
     explanation: "Realpolitik focused on practical goals."
   },
+  
   {
     q: "What did Bismarck mean by 'blood and iron'?",
     options: ["Peaceful reform", "War and military strength", "Trade alliances", "Religious unity"],
@@ -265,13 +166,7 @@ const questions = [
     difficulty: "medium",
     explanation: "Unification through war and industry."
   },
-  {
-    q: "Who originally coined the term Realpolitik?",
-    options: ["Ludwig von Rochau", "Bismarck", "Metternich", "Wilhelm I"],
-    answer: 0,
-    difficulty: "hard",
-    explanation: "The term was coined by Ludwig von Rochau."
-  },
+
 
  
 
@@ -295,7 +190,57 @@ const questions = [
     answer: 1,
     difficulty: "medium",
     explanation: "Flat land allowed rapid troop movement."
-  }
+  },
 
+     {
+  q: "Why were the Alps significant in limiting Austrian influence in Germany?",
+  options: [
+    "They blocked Austrian expansion northward",
+    "They increased Austrian industrial power",
+    "They connected Austria directly to France",
+    "They provided major naval advantages"
+  ],
+  answer: 0,
+  difficulty: "medium",
+  explanation: "The Alps created a natural barrier that limited Austria’s expansion and influence north into the German states."
+},
+{
+  q: "Why did Austria struggle to lead German unification geographically?",
+  options: [
+    "It had no access to rivers",
+    "Much of its empire was non-German and outside central Germany",
+    "It lacked industrial cities",
+    "It was too small compared to Prussia"
+  ],
+  answer: 1,
+  difficulty: "hard",
+  explanation: "Austria’s empire included many non-German regions, which weakened its claim to lead a unified German nation."
+},
+{
+  q: "Why was Schleswig-Holstein geographically significant?",
+  options: [
+    "It bordered Denmark and controlled access to the Baltic Sea",
+    "It was the richest farming region in Germany",
+    "It was located near the Alps",
+    "It had large gold reserves"
+  ],
+  answer: 0,
+  difficulty: "medium",
+  explanation: "Schleswig-Holstein bordered Denmark and provided strategic control over access to the Baltic Sea, making it highly important."
+},
+{
+  q: "How did Prussia’s position between eastern and western Europe benefit it?",
+  options: [
+    "It isolated Prussia from conflict",
+    "It allowed control of key trade and military routes",
+    "It prevented alliances with other states",
+    "It limited industrial growth"
+  ],
+  answer: 1,
+  difficulty: "medium",
+  explanation: "Prussia’s central position allowed it to control major trade and military routes across Europe."
+},
+  
 ];
+
 
