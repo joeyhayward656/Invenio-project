@@ -13,29 +13,36 @@
     box-sizing:border-box;
     font-family:'Poppins',sans-serif;
 }
+
+body{
+    background:linear-gradient(135deg,#ffffff,#f5f5f5);
+}
+
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(255,255,255,0.04) 0px,
-    rgba(255,255,255,0.04) 2px,
+    rgba(0,0,0,0.03) 0px,
+    rgba(0,0,0,0.03) 2px,
     transparent 2px,
     transparent 8px
   );
   pointer-events: none;
 }
-    
+
 .container{
     background:white;
     width:90%;
     max-width:750px;
     padding:40px;
     border-radius:20px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    box-shadow:0 20px 50px rgba(0,0,0,0.15);
     text-align:center;
+    margin:60px auto;
 }
+
 .progress-bar{
     width:100%;
     height:10px;
@@ -47,14 +54,16 @@ body::after {
 .progress{
     height:100%;
     width:0%;
-    background:#dd0000;
+    background:#000;
     transition:width 0.4s ease;
 }
+
 .question{
     font-size:18px;
     margin-bottom:20px;
     font-weight:600;
 }
+
 .option{
     padding:12px;
     border-radius:10px;
@@ -64,19 +73,22 @@ body::after {
     transition:0.3s;
 }
 .option:hover{ background:#f2f2f2; }
+
 .correct{
-    background:#4CAF50 !important;
+    background:#000 !important;
     color:white;
 }
 .wrong{
-    background:#e53935 !important;
+    background:#777 !important;
     color:white;
 }
+
 .explanation{
     margin-top:15px;
     font-size:14px;
     color:#444;
 }
+
 button{
     margin-top:20px;
     padding:12px 20px;
@@ -86,14 +98,20 @@ button{
     color:white;
     font-weight:600;
     cursor:pointer;
+    transition:0.3s;
 }
+
+button:hover{
+    opacity:0.85;
+}
+
 .certificate{
     padding:40px;
-    border:10px solid;
+    border:6px solid #000;
     border-radius:15px;
     margin-top:20px;
 }
-.default{ border-color:#333; }
+
 @media print{
     body{ background:white; }
     .no-print{ display:none; }
@@ -124,137 +142,128 @@ button{
 const username = localStorage.getItem("quizUsername") || "Student";
 document.getElementById("welcome").innerText = "Welcome, " + username;
 
-/* ------------------ PROFESSIONAL SHUFFLE ------------------ */
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+function shuffle(array){
+    for(let i=array.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [array[i],array[j]]=[array[j],array[i]];
     }
     return array;
 }
 
-/* ------------------ DIFFICULTY BALANCED GENERATOR ------------------ */
-function generateBalancedQuiz() {
-
-    const easy = questions.filter(q => q.difficulty === "easy");
-    const medium = questions.filter(q => q.difficulty === "medium");
-    const hard = questions.filter(q => q.difficulty === "hard");
+function generateBalancedQuiz(){
+    const easy=questions.filter(q=>q.difficulty==="easy");
+    const medium=questions.filter(q=>q.difficulty==="medium");
+    const hard=questions.filter(q=>q.difficulty==="hard");
 
     shuffle(easy);
     shuffle(medium);
     shuffle(hard);
 
-    const selected = [
+    return shuffle([
         ...easy.slice(0,4),
         ...medium.slice(0,3),
         ...hard.slice(0,3)
-    ];
-
-    return shuffle(selected);
+    ]);
 }
 
-let quizQuestions = generateBalancedQuiz();
-let current = 0;
-let score = 0;
-let startTime = Date.now();
+let quizQuestions=generateBalancedQuiz();
+let current=0;
+let score=0;
+let startTime=Date.now();
 
-/* ------------------ PROGRESS ------------------ */
 function updateProgress(){
-    const percent = (current / quizQuestions.length) * 100;
-    document.getElementById("progress").style.width = percent + "%";
+    const percent=(current/quizQuestions.length)*100;
+    document.getElementById("progress").style.width=percent+"%";
 }
 
-/* ------------------ LOAD QUESTION ------------------ */
 function loadQuestion(){
     updateProgress();
+    const q=quizQuestions[current];
 
-    const q = quizQuestions[current];
+    document.getElementById("question").innerText=
+        `Question ${current+1} of ${quizQuestions.length}: ${q.q}`;
 
-    document.getElementById("question").innerText =
-        "Question " + (current+1) + " of " + quizQuestions.length + ": " + q.q;
-
-    const optionsDiv = document.getElementById("options");
-    optionsDiv.innerHTML = "";
-    document.getElementById("explanation").innerText = "";
-    document.getElementById("nextBtn").style.display = "none";
+    const optionsDiv=document.getElementById("options");
+    optionsDiv.innerHTML="";
+    document.getElementById("explanation").innerText="";
+    document.getElementById("nextBtn").style.display="none";
 
     q.options.forEach((opt,index)=>{
-        const div = document.createElement("div");
+        const div=document.createElement("div");
         div.classList.add("option");
-        div.innerText = opt;
-        div.onclick = () => checkAnswer(div,index);
+        div.innerText=opt;
+        div.onclick=()=>checkAnswer(div,index);
         optionsDiv.appendChild(div);
     });
 }
 
-/* ------------------ CHECK ANSWER ------------------ */
 function checkAnswer(selectedDiv,index){
-    const q = quizQuestions[current];
-    const options = document.querySelectorAll(".option");
+    const q=quizQuestions[current];
+    const options=document.querySelectorAll(".option");
+    options.forEach(opt=>opt.onclick=null);
 
-    options.forEach(opt => opt.onclick = null);
-
-    if(index === q.answer){
+    if(index===q.answer){
         selectedDiv.classList.add("correct");
         score++;
-    } else {
+    }else{
         selectedDiv.classList.add("wrong");
         options[q.answer].classList.add("correct");
     }
 
-    document.getElementById("explanation").innerText = q.explanation;
-    document.getElementById("nextBtn").style.display = "inline-block";
+    document.getElementById("explanation").innerText=q.explanation;
+    document.getElementById("nextBtn").style.display="inline-block";
 }
 
-/* ------------------ NEXT QUESTION ------------------ */
 function nextQuestion(){
     current++;
-    if(current < quizQuestions.length){
+    if(current<quizQuestions.length){
         loadQuestion();
-    } else {
+    }else{
         finishQuiz();
     }
 }
 
-/* ------------------ FINISH QUIZ ------------------ */
 function finishQuiz(){
-    document.getElementById("progress").style.width = "100%";
-    const totalTime = Math.floor((Date.now() - startTime) / 1000);
+    document.getElementById("progress").style.width="100%";
+    const totalTime=Math.floor((Date.now()-startTime)/1000);
 
     showConfetti();
-    showCertificate();
-
-    setTimeout(()=>{
-        saveToFirebase(score, totalTime);
-    },2000);
+    showCertificate(totalTime);
 }
 
-/* ------------------ CERTIFICATE ------------------ */
-function showCertificate(){
-    document.getElementById("mainContent").innerHTML = `
-        <div class="certificate default">
+function showCertificate(totalTime){
+    document.getElementById("mainContent").innerHTML=`
+        <div class="certificate">
             <h1>Certificate of Achievement</h1>
             <p>This certifies that</p>
             <h2>${username}</h2>
             <p>has successfully completed the German Unification Academic Quiz</p>
-            <p>Score: ${score}/${quizQuestions.length}</p>
+            <p><strong>Score:</strong> ${score}/${quizQuestions.length}</p>
+            <p><strong>Time:</strong> ${totalTime}s</p>
             <p>Date: ${new Date().toLocaleDateString()}</p>
         </div>
 
         <div class="no-print">
             <button onclick="window.print()">Print Certificate</button>
+            <button onclick="goToLeaderboard()">View Leaderboard</button>
+            <button onclick="location.reload()">Play Again</button>
         </div>
     `;
+
+    saveToFirebase(score,totalTime);
 }
 
-/* ------------------ CONFETTI ------------------ */
+function goToLeaderboard(){
+    window.location.href="leaderboard.html";
+}
+
 function showConfetti(){
     for(let i=0;i<100;i++){
-        const conf = document.createElement("div");
+        const conf=document.createElement("div");
         conf.style.position="fixed";
-        conf.style.width="8px";
-        conf.style.height="8px";
-        conf.style.background=["#FFD700","#C0C0C0","#CD7F32","#dd0000","#ffce00"][Math.floor(Math.random()*5)];
+        conf.style.width="6px";
+        conf.style.height="6px";
+        conf.style.background=["#000","#444","#888","#ccc","#fff"][Math.floor(Math.random()*5)];
         conf.style.left=Math.random()*window.innerWidth+"px";
         conf.style.top="-10px";
         conf.style.borderRadius="50%";
@@ -278,10 +287,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCwDkm3VB3dh1kkZYGw10bGV7DBo9yNjGU"",
+  apiKey: "AIzaSyCwDkm3VB3dh1kkZYGw10bGV7DBo9yNjGU",
   authDomain: "german-unification-quiz.firebaseapp.com",
   projectId: "german-unification-quiz",
-  storageBucket: "german-unification-quiz.firebasestorage.app",
+  storageBucket: "german-unification-quiz.appspot.com",
   messagingSenderId: "748292475340",
   appId: "1:748292475340:web:3352e9a590862c20ef7569"
 };
@@ -290,22 +299,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 window.saveToFirebase = async function(score,totalTime){
-    const username = localStorage.getItem("quizUsername");
     try{
         await addDoc(collection(db,"leaderboard"),{
-            username: username,
+            username: localStorage.getItem("quizUsername"),
             score: score,
             time: totalTime,
             timestamp: new Date()
         });
-        window.location.href = "leaderboard.html";
+        console.log("Score saved successfully");
     }catch(error){
-        alert("Error saving score: " + error.message);
+        alert("Error saving score: "+error.message);
     }
 };
 </script>
 
 </body>
 </html>
-
-
