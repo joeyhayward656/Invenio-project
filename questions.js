@@ -1,7 +1,5 @@
 const questions = [
 
-  /* 🏰 The Early 1800s & The German Confederation */
-
   {
     q: "Why did Germany not exist as a single state before 1871?",
     options: ["It was divided into many independent states", "It was controlled by France", "It was part of Russia", "It was a colony of Britain"],
@@ -109,7 +107,7 @@ const questions = [
     explanation: "European powers prioritized peace and stability after years of war."
   },
 
-  /* 📈 Economic Integration */
+
 
   {
     q: "What role did Prussia play in economic integration?",
@@ -133,7 +131,7 @@ const questions = [
     explanation: "Economic unity through free trade helped promote political unity."
   },
 
-  /* 🗳️ 1848 Revolutions */
+
 
   {
     q: "What was the Frankfurt Parliament of 1848?",
@@ -252,7 +250,6 @@ const questions = [
     explanation: "It was proclaimed at Versailles."
   },
 
-  /* 👑 Bismarck */
 
   {
     q: "What is Realpolitik?",
@@ -276,7 +273,7 @@ const questions = [
     explanation: "The term was coined by Ludwig von Rochau."
   },
 
-  /* 🌍 Geography */
+ 
 
   {
     q: "Why was Germany’s central location important?",
@@ -301,3 +298,4 @@ const questions = [
   }
 
 ];
+
