@@ -184,11 +184,13 @@ button:hover{
     width:200px;
 }
 
-@media print{
-    body{ background:white; }
-    .no-print{ display:none; }
-    .certificate{ box-shadow:none; }
+@media (max-width:768px){
+    .container{
+        padding:30px 20px;
+        min-height:auto;
+    }
 }
+    
 </style>
 </head>
 
@@ -399,4 +401,5 @@ loadQuestion();
 
 </body>
 </html>
+
 
