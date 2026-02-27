@@ -7,139 +7,68 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
 body{
-    background: linear-gradient(
-        to bottom,
-        #ffffff 0%,
-        #f5b5b5 30%,
-        #cc0000 60%,
-        #330000 85%,
-        #000000 100%
-    );
+    background: linear-gradient(to bottom,#ffffff 0%,#f5b5b5 30%,#cc0000 60%,#330000 85%,#000000 100%);
     min-height:100vh;
-
     display:flex;
     justify-content:center;
-    align-items:center;   /* TRUE vertical center */
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(255,255,255,0.05) 0px,
-    rgba(255,255,255,0.05) 2px,
-    transparent 2px,
-    transparent 8px
-  );
-  pointer-events: none;
+    align-items:center;
 }
 
 .container{
     background:white;
     width:92%;
-    max-width:1000px;        /* Bigger on laptops */
-    min-height:500px;        /* Makes it feel more dominant */
-    padding:60px 50px;       /* More breathing room */
+    max-width:1000px;
+    min-height:500px;
+    padding:60px 50px;
     border-radius:25px;
     box-shadow:0 30px 70px rgba(0,0,0,0.45);
     text-align:center;
-
     display:flex;
     flex-direction:column;
-    justify-content:center;  /* Vertical centering inside box */
+    justify-content:center;
 }
 
-.progress-bar{
-    width:100%;
-    height:12px;
-    background:#eee;
-    border-radius:20px;
-    margin-bottom:25px;
-    overflow:hidden;
-}
-.progress{
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg,#000,#dd0000,#ffce00);
-    transition:width 0.4s ease;
-}
+.progress-bar{width:100%;height:14px;background:#eee;border-radius:20px;margin-bottom:25px;overflow:hidden;}
+.progress{height:100%;width:0%;background:linear-gradient(90deg,#000,#dd0000,#ffce00);transition:width 0.4s ease;}
 
-.question{
-    font-size:18px;
-    margin-bottom:20px;
-    font-weight:600;
-}
-
+.question{font-size:24px;margin-bottom:30px;font-weight:600;}
 .option{
-    padding:12px;
-    border-radius:10px;
+    padding:18px;
+    border-radius:14px;
     border:1px solid #ccc;
-    margin-bottom:10px;
+    margin-bottom:16px;
     cursor:pointer;
     transition:0.25s;
+    font-size:18px;
 }
-
-.option:hover{
-    background:#f2f2f2;
-    transform:scale(1.02);
-}
-
-.correct{
-    background:#1db954 !important;
-    color:white;
-    box-shadow:0 0 15px rgba(29,185,84,0.7);
-}
-
-.wrong{
-    background:#e63946 !important;
-    color:white;
-    box-shadow:0 0 15px rgba(230,57,70,0.7);
-}
-
-.explanation{
-    margin-top:15px;
-    font-size:14px;
-    color:#333;
-}
+.option:hover{background:#f2f2f2;transform:scale(1.03);}
+.correct{background:#1db954 !important;color:white;}
+.wrong{background:#e63946 !important;color:white;}
 
 button{
-    margin-top:20px;
-    padding:12px 20px;
+    margin-top:25px;
+    padding:14px 25px;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     background:black;
     color:white;
     font-weight:600;
     cursor:pointer;
-    transition:0.3s;
 }
 
-button:hover{
-    opacity:0.85;
-}
-
-/* CERTIFICATE DESIGN */
+/* CERTIFICATE */
 
 .certificate{
     position:relative;
     padding:60px 40px;
-    border:8px solid black;
-    border-radius:20px;
-    margin-top:20px;
+    border:10px solid black;
+    border-radius:25px;
     overflow:hidden;
 }
 
-/* Watermark */
 .certificate::before{
     content:"";
     position:absolute;
@@ -147,56 +76,176 @@ button:hover{
     background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Coat_of_arms_of_Germany.svg/800px-Coat_of_arms_of_Germany.svg.png");
     background-repeat:no-repeat;
     background-position:center;
-    background-size:300px;
-    opacity:0.05;
+    background-size:320px;
+    opacity:0.06;
     pointer-events:none;
 }
 
-.cert-title{
-    font-size:32px;
-    font-weight:800;
-    margin-bottom:10px;
-}
+.gold{border-color:gold;box-shadow:0 0 50px gold;}
+.silver{border-color:silver;box-shadow:0 0 50px silver;}
+.bronze{border-color:#cd7f32;box-shadow:0 0 50px #cd7f32;}
+.distinction{border-color:black;}
 
-.cert-name{
-    font-size:28px;
-    font-weight:700;
-    margin:15px 0;
-}
-
-.distinction{
-    margin-top:15px;
-    font-size:20px;
-    font-weight:700;
-    color:#cc0000;
-}
+.cert-title{font-size:36px;font-weight:800;margin-bottom:10px;}
+.cert-name{font-size:30px;font-weight:700;margin:20px 0;}
+.rank-text{font-size:22px;margin-top:15px;font-weight:700;}
 
 .signature{
-    margin-top:40px;
+    margin-top:50px;
     display:flex;
     justify-content:space-between;
-    font-size:14px;
 }
-
 .signature div{
     border-top:1px solid #000;
+    width:220px;
     padding-top:5px;
-    width:200px;
 }
 
-@media (max-width:768px){
-    .container{
-        padding:30px 20px;
-        min-height:auto;
-    }
+@media(max-width:768px){
+    .container{padding:30px 20px;}
 }
-    
 </style>
 </head>
 
+<body>
+
+<div class="container" id="mainContent">
+<h1 id="welcome"></h1>
+<div class="progress-bar"><div class="progress" id="progress"></div></div>
+<div class="question" id="question"></div>
+<div id="options"></div>
+<button id="nextBtn" onclick="nextQuestion()" style="display:none;">Next</button>
+</div>
+
+<script src="questions.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+const username = localStorage.getItem("quizUsername") || "Student";
+document.getElementById("welcome").innerText="Welcome, "+username;
+
+/* LOCK AFTER COMPLETION */
+if(localStorage.getItem("quizCompleted")==="true"){
+    alert("You have already completed this quiz.");
+    window.location.href="leaderboard.html";
+}
+
+/* TIMER LOCK */
+let startTime;
+if(localStorage.getItem("quizStartTime")){
+    startTime=parseInt(localStorage.getItem("quizStartTime"));
+}else{
+    startTime=Date.now();
+    localStorage.setItem("quizStartTime",startTime);
+}
+
+let current=0;
+let score=0;
+let quizQuestions=questions.sort(()=>0.5-Math.random()).slice(0,10);
+
+function updateProgress(){
+    document.getElementById("progress").style.width=
+    (current/quizQuestions.length)*100+"%";
+}
+
+function loadQuestion(){
+    updateProgress();
+    const q=quizQuestions[current];
+    document.getElementById("question").innerText=`Question ${current+1}: ${q.q}`;
+    const optionsDiv=document.getElementById("options");
+    optionsDiv.innerHTML="";
+    q.options.forEach((opt,i)=>{
+        const div=document.createElement("div");
+        div.classList.add("option");
+        div.innerText=opt;
+        div.onclick=()=>checkAnswer(div,i);
+        optionsDiv.appendChild(div);
+    });
+}
+
+function checkAnswer(selected,index){
+    const q=quizQuestions[current];
+    const options=document.querySelectorAll(".option");
+    options.forEach(o=>o.onclick=null);
+    if(index===q.answer){selected.classList.add("correct");score++;}
+    else{selected.classList.add("wrong");options[q.answer].classList.add("correct");}
+    document.getElementById("nextBtn").style.display="inline-block";
+}
+
+function nextQuestion(){
+    current++;
+    if(current<quizQuestions.length) loadQuestion();
+    else finishQuiz();
+}
+
+async function finishQuiz(){
+    localStorage.setItem("quizCompleted","true");
+
+    const totalTime=Math.floor((Date.now()-startTime)/1000);
+    const minutes=Math.floor(totalTime/60);
+    const seconds=totalTime%60;
+
+    await saveToFirebase(score,totalTime);
+    const leaderboard=await getLeaderboard();
+    const rank=leaderboard.findIndex(e=>e.username===username)+1;
+
+    let certClass="distinction";
+    if(rank===1) certClass="gold";
+    if(rank===2) certClass="silver";
+    if(rank===3) certClass="bronze";
+
+    document.getElementById("mainContent").innerHTML=`
+        <div class="certificate ${certClass}">
+            <div class="cert-title">Certificate of Academic Achievement</div>
+            <p>This certifies that</p>
+            <div class="cert-name">${username}</div>
+            <p>has successfully completed the German Unification Academic Quiz</p>
+            <p><strong>Score:</strong> ${score}/${quizQuestions.length}</p>
+            <p><strong>Time Taken:</strong> ${minutes}m ${seconds}s</p>
+            <div class="rank-text">Rank Achieved: ${rank}</div>
+            <div class="signature">
+                <div>Quiz Authority</div>
+                <div>${new Date().toLocaleDateString()}</div>
+            </div>
+        </div>
+        <button onclick="downloadCertificate()">Download Certificate</button>
+        <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
+    `;
+
+    megaConfetti();
+}
+
+function megaConfetti(){
+    const duration=5000;
+    const end=Date.now()+duration;
+    const colors=["#000","#dd0000","#ffce00"];
+    (function frame(){
+        confetti({particleCount:10,spread:80,origin:{x:0},colors});
+        confetti({particleCount:10,spread:80,origin:{x:1},colors});
+        if(Date.now()<end){requestAnimationFrame(frame);}
+    })();
+    confetti({particleCount:300,spread:150,origin:{y:0.6},colors});
+}
+
+async function downloadCertificate(){
+    const { jsPDF } = window.jspdf;
+    const cert=document.querySelector(".certificate");
+    const canvas=await html2canvas(cert,{scale:2,useCORS:true});
+    const imgData=canvas.toDataURL("image/png");
+    const pdf=new jsPDF({orientation:"landscape",unit:"px",format:[canvas.width,canvas.height]});
+    pdf.addImage(imgData,"PNG",0,0,canvas.width,canvas.height);
+    pdf.save(`${username}_Certificate.pdf`);
+}
+
+loadQuestion();
+</script>
+
+<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCwDkm3VB3dh1kkZYGw10bGV7DBo9yNjGU",
@@ -210,196 +259,32 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.saveToFirebase = async function(score,totalTime){
-    try{
+window.saveToFirebase=async function(score,totalTime){
+    const snapshot=await getDocs(collection(db,"leaderboard"));
+    let exists=false;
+    snapshot.forEach(doc=>{
+        if(doc.data().username===localStorage.getItem("quizUsername")){
+            exists=true;
+        }
+    });
+    if(!exists){
         await addDoc(collection(db,"leaderboard"),{
-            username: localStorage.getItem("quizUsername"),
-            score: score,
-            time: totalTime,
-            timestamp: new Date()
+            username:localStorage.getItem("quizUsername"),
+            score:score,
+            time:totalTime,
+            timestamp:new Date()
         });
-        console.log("Score saved successfully");
-    }catch(error){
-        alert("Error saving score: "+error.message);
     }
 };
-</script>
-    
-<body>
 
-<div class="container" id="mainContent">
-    <h1 id="welcome"></h1>
-
-    <div class="progress-bar">
-        <div class="progress" id="progress"></div>
-    </div>
-
-    <div class="question" id="question"></div>
-    <div id="options"></div>
-    <div class="explanation" id="explanation"></div>
-
-    <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Next Question</button>
-</div>
-
-<script src="questions.js"></script>
-
-<script>
-const username = localStorage.getItem("quizUsername") || "Student";
-document.getElementById("welcome").innerText = "Welcome, " + username;
-
-function shuffle(array){
-    for(let i=array.length-1;i>0;i--){
-        const j=Math.floor(Math.random()*(i+1));
-        [array[i],array[j]]=[array[j],array[i]];
-    }
-    return array;
-}
-
-function generateBalancedQuiz(){
-    const easy=questions.filter(q=>q.difficulty==="easy");
-    const medium=questions.filter(q=>q.difficulty==="medium");
-    const hard=questions.filter(q=>q.difficulty==="hard");
-
-    shuffle(easy);
-    shuffle(medium);
-    shuffle(hard);
-
-    return shuffle([
-        ...easy.slice(0,4),
-        ...medium.slice(0,3),
-        ...hard.slice(0,3)
-    ]);
-}
-
-let quizQuestions=generateBalancedQuiz();
-let current=0;
-let score=0;
-let startTime=Date.now();
-
-function updateProgress(){
-    const percent=(current/quizQuestions.length)*100;
-    document.getElementById("progress").style.width=percent+"%";
-}
-
-function loadQuestion(){
-    updateProgress();
-    const q=quizQuestions[current];
-
-    document.getElementById("question").innerText=
-        `Question ${current+1} of ${quizQuestions.length}: ${q.q}`;
-
-    const optionsDiv=document.getElementById("options");
-    optionsDiv.innerHTML="";
-    document.getElementById("explanation").innerText="";
-    document.getElementById("nextBtn").style.display="none";
-
-    q.options.forEach((opt,index)=>{
-        const div=document.createElement("div");
-        div.classList.add("option");
-        div.innerText=opt;
-        div.onclick=()=>checkAnswer(div,index);
-        optionsDiv.appendChild(div);
-    });
-}
-
-function checkAnswer(selectedDiv,index){
-    const q=quizQuestions[current];
-    const options=document.querySelectorAll(".option");
-    options.forEach(opt=>opt.onclick=null);
-
-    if(index===q.answer){
-        selectedDiv.classList.add("correct");
-        score++;
-    }else{
-        selectedDiv.classList.add("wrong");
-        options[q.answer].classList.add("correct");
-    }
-
-    document.getElementById("explanation").innerText=q.explanation;
-    document.getElementById("nextBtn").style.display="inline-block";
-}
-
-function nextQuestion(){
-    current++;
-    if(current<quizQuestions.length){
-        loadQuestion();
-    }else{
-        finishQuiz();
-    }
-}
-
-function finishQuiz(){
-    document.getElementById("progress").style.width="100%";
-    const totalTime=Math.floor((Date.now()-startTime)/1000);
-    showConfetti();
-    showCertificate(totalTime);
-}
-
-function showCertificate(totalTime){
-    const percentage = (score/quizQuestions.length)*100;
-    const isDistinction = percentage >= 80;
-
-    document.getElementById("mainContent").innerHTML=`
-        <div class="certificate">
-            <div class="cert-title">Certificate of Achievement</div>
-            <p>This certifies that</p>
-            <div class="cert-name">${username}</div>
-            <p>has successfully completed the German Unification Academic Quiz</p>
-            <p><strong>Score:</strong> ${score}/${quizQuestions.length}</p>
-            <p><strong>Time:</strong> ${totalTime}s</p>
-            <p>Date: ${new Date().toLocaleDateString()}</p>
-
-            ${isDistinction ? `<div class="distinction">Awarded with Distinction</div>` : ""}
-
-            <div class="signature">
-                <div>Quiz Authority</div>
-                <div>Date Issued</div>
-            </div>
-        </div>
-
-        <div class="no-print">
-            <button onclick="downloadCertificate()">Download Certificate</button>
-            <button onclick="goToLeaderboard()">View Leaderboard</button>
-            <button onclick="location.reload()">Play Again</button>
-        </div>
-    `;
-
-    saveToFirebase(score,totalTime);
-}
-
-function goToLeaderboard(){
-    window.location.href="leaderboard.html";
-}
-
-function showConfetti(){
-    const colors=["#000000","#dd0000","#ffce00"];
-
-    for(let i=0;i<120;i++){
-        const conf=document.createElement("div");
-        conf.style.position="fixed";
-        conf.style.width="8px";
-        conf.style.height="8px";
-        conf.style.background=colors[Math.floor(Math.random()*colors.length)];
-        conf.style.left=Math.random()*window.innerWidth+"px";
-        conf.style.top="-10px";
-        conf.style.borderRadius="50%";
-        document.body.appendChild(conf);
-
-        conf.animate(
-            [
-                {transform:"translateY(0) rotate(0deg)"},
-                {transform:`translateY(${window.innerHeight}px) rotate(720deg)`}
-            ],
-            {duration:2500,easing:"ease-out"}
-        );
-
-        setTimeout(()=>conf.remove(),2500);
-    }
-}
-loadQuestion();
+window.getLeaderboard=async function(){
+    const snapshot=await getDocs(collection(db,"leaderboard"));
+    let arr=[];
+    snapshot.forEach(doc=>arr.push(doc.data()));
+    arr.sort((a,b)=>b.score-a.score||a.time-b.time);
+    return arr;
+};
 </script>
 
 </body>
 </html>
-
-
