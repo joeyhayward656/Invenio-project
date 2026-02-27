@@ -149,12 +149,6 @@ button{
 const username = localStorage.getItem("quizUsername") || "Student";
 document.getElementById("welcome").innerText="Welcome, "+username;
 
-/* LOCK AFTER COMPLETION */
-if(localStorage.getItem("quizCompleted")==="true"){
-    alert("You have already completed this quiz.");
-    window.location.href="leaderboard.html";
-}
-
 /* TIMER LOCK */
 let startTime;
 if(localStorage.getItem("quizStartTime")){
@@ -204,7 +198,6 @@ function nextQuestion(){
 }
 
 async function finishQuiz(){
-    localStorage.setItem("quizCompleted","true");
 
     const totalTime=Math.floor((Date.now()-startTime)/1000);
     const minutes=Math.floor(totalTime/60);
@@ -259,7 +252,6 @@ function megaConfetti(){
 loadQuestion();
 </script>
 
-<!-- FIREBASE (unchanged) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -276,17 +268,32 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+/* FIREBASE CHECK INSTEAD OF BROWSER LOCK */
+window.addEventListener("load", async () => {
+    const snapshot=await getDocs(collection(db,"leaderboard"));
+    let exists=false;
+    snapshot.forEach(doc=>{
+        if(doc.data().username===username){
+            exists=true;
+        }
+    });
+    if(exists){
+        alert("You have already completed this quiz.");
+        window.location.href="leaderboard.html";
+    }
+});
+
 window.saveToFirebase=async function(score,totalTime){
     const snapshot=await getDocs(collection(db,"leaderboard"));
     let exists=false;
     snapshot.forEach(doc=>{
-        if(doc.data().username===localStorage.getItem("quizUsername")){
+        if(doc.data().username===username){
             exists=true;
         }
     });
     if(!exists){
         await addDoc(collection(db,"leaderboard"),{
-            username:localStorage.getItem("quizUsername"),
+            username:username,
             score:score,
             time:totalTime,
             timestamp:new Date()
@@ -305,4 +312,5 @@ window.getLeaderboard=async function(){
 
 </body>
 </html>
+
 
