@@ -101,6 +101,31 @@ button{
     padding-top:5px;
 }
 
+/* PRINT SETTINGS */
+@page {
+    size: landscape;
+    margin: 0;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .certificate, .certificate * {
+        visibility: visible;
+    }
+    .certificate {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none !important;
+    }
+    button {
+        display: none !important;
+    }
+}
+
 @media(max-width:768px){
     .container{padding:30px 20px;}
 }
@@ -119,8 +144,6 @@ button{
 
 <script src="questions.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
 const username = localStorage.getItem("quizUsername") || "Student";
@@ -210,11 +233,15 @@ async function finishQuiz(){
                 <div>${new Date().toLocaleDateString()}</div>
             </div>
         </div>
-        <button onclick="downloadCertificate()">Download Certificate</button>
+        <button onclick="printCertificate()">Print Certificate</button>
         <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
     `;
 
     megaConfetti();
+}
+
+function printCertificate(){
+    window.print();
 }
 
 function megaConfetti(){
@@ -229,20 +256,10 @@ function megaConfetti(){
     confetti({particleCount:300,spread:150,origin:{y:0.6},colors});
 }
 
-async function downloadCertificate(){
-    const { jsPDF } = window.jspdf;
-    const cert=document.querySelector(".certificate");
-    const canvas=await html2canvas(cert,{scale:2,useCORS:true});
-    const imgData=canvas.toDataURL("image/png");
-    const pdf=new jsPDF({orientation:"landscape",unit:"px",format:[canvas.width,canvas.height]});
-    pdf.addImage(imgData,"PNG",0,0,canvas.width,canvas.height);
-    pdf.save(`${username}_Certificate.pdf`);
-}
-
 loadQuestion();
 </script>
 
-<!-- FIREBASE -->
+<!-- FIREBASE (unchanged) -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -288,3 +305,4 @@ window.getLeaderboard=async function(){
 
 </body>
 </html>
+
