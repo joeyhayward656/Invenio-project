@@ -26,7 +26,6 @@ body{
     min-height: 100vh;
 }
 
-/* subtle texture overlay */
 body::after {
   content: "";
   position: fixed;
@@ -44,7 +43,7 @@ body::after {
 .container{
     background:white;
     width:90%;
-    max-width:750px; /* same size */
+    max-width:750px;
     padding:40px;
     border-radius:20px;
     box-shadow:0 25px 60px rgba(0,0,0,0.4);
@@ -52,7 +51,6 @@ body::after {
     margin:60px auto;
 }
 
-/* Progress bar upgraded */
 .progress-bar{
     width:100%;
     height:12px;
@@ -88,14 +86,12 @@ body::after {
     transform:scale(1.02);
 }
 
-/* 🟢 GREEN CORRECT */
 .correct{
     background:#1db954 !important;
     color:white;
     box-shadow:0 0 15px rgba(29,185,84,0.7);
 }
 
-/* 🔴 RED WRONG */
 .wrong{
     background:#e63946 !important;
     color:white;
@@ -124,11 +120,60 @@ button:hover{
     opacity:0.85;
 }
 
+/* CERTIFICATE DESIGN */
+
 .certificate{
-    padding:40px;
-    border:6px solid black;
-    border-radius:15px;
+    position:relative;
+    padding:60px 40px;
+    border:8px solid black;
+    border-radius:20px;
     margin-top:20px;
+    overflow:hidden;
+}
+
+/* Watermark */
+.certificate::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Coat_of_arms_of_Germany.svg/800px-Coat_of_arms_of_Germany.svg.png");
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:300px;
+    opacity:0.05;
+    pointer-events:none;
+}
+
+.cert-title{
+    font-size:32px;
+    font-weight:800;
+    margin-bottom:10px;
+}
+
+.cert-name{
+    font-size:28px;
+    font-weight:700;
+    margin:15px 0;
+}
+
+.distinction{
+    margin-top:15px;
+    font-size:20px;
+    font-weight:700;
+    color:#cc0000;
+}
+
+.signature{
+    margin-top:40px;
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+}
+
+.signature div{
+    border-top:1px solid #000;
+    padding-top:5px;
+    width:200px;
 }
 
 @media print{
@@ -137,9 +182,39 @@ button:hover{
     .certificate{ box-shadow:none; }
 }
 </style>
-    
 </head>
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCwDkm3VB3dh1kkZYGw10bGV7DBo9yNjGU",
+  authDomain: "german-unification-quiz.firebaseapp.com",
+  projectId: "german-unification-quiz",
+  storageBucket: "german-unification-quiz.appspot.com",
+  messagingSenderId: "748292475340",
+  appId: "1:748292475340:web:3352e9a590862c20ef7569"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.saveToFirebase = async function(score,totalTime){
+    try{
+        await addDoc(collection(db,"leaderboard"),{
+            username: localStorage.getItem("quizUsername"),
+            score: score,
+            time: totalTime,
+            timestamp: new Date()
+        });
+        console.log("Score saved successfully");
+    }catch(error){
+        alert("Error saving score: "+error.message);
+    }
+};
+</script>
+    
 <body>
 
 <div class="container" id="mainContent">
@@ -246,25 +321,34 @@ function nextQuestion(){
 function finishQuiz(){
     document.getElementById("progress").style.width="100%";
     const totalTime=Math.floor((Date.now()-startTime)/1000);
-
     showConfetti();
     showCertificate(totalTime);
 }
 
 function showCertificate(totalTime){
+    const percentage = (score/quizQuestions.length)*100;
+    const isDistinction = percentage >= 80;
+
     document.getElementById("mainContent").innerHTML=`
         <div class="certificate">
-            <h1>Certificate of Achievement</h1>
+            <div class="cert-title">Certificate of Achievement</div>
             <p>This certifies that</p>
-            <h2>${username}</h2>
+            <div class="cert-name">${username}</div>
             <p>has successfully completed the German Unification Academic Quiz</p>
             <p><strong>Score:</strong> ${score}/${quizQuestions.length}</p>
             <p><strong>Time:</strong> ${totalTime}s</p>
             <p>Date: ${new Date().toLocaleDateString()}</p>
+
+            ${isDistinction ? `<div class="distinction">Awarded with Distinction</div>` : ""}
+
+            <div class="signature">
+                <div>Quiz Authority</div>
+                <div>Date Issued</div>
+            </div>
         </div>
 
         <div class="no-print">
-            <button onclick="window.print()">Print Certificate</button>
+            <button onclick="downloadCertificate()">Download Certificate</button>
             <button onclick="goToLeaderboard()">View Leaderboard</button>
             <button onclick="location.reload()">Play Again</button>
         </div>
@@ -302,43 +386,8 @@ function showConfetti(){
         setTimeout(()=>conf.remove(),2500);
     }
 }
-
 loadQuestion();
-</script>
-
-<!-- FIREBASE -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCwDkm3VB3dh1kkZYGw10bGV7DBo9yNjGU",
-  authDomain: "german-unification-quiz.firebaseapp.com",
-  projectId: "german-unification-quiz",
-  storageBucket: "german-unification-quiz.appspot.com",
-  messagingSenderId: "748292475340",
-  appId: "1:748292475340:web:3352e9a590862c20ef7569"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.saveToFirebase = async function(score,totalTime){
-    try{
-        await addDoc(collection(db,"leaderboard"),{
-            username: localStorage.getItem("quizUsername"),
-            score: score,
-            time: totalTime,
-            timestamp: new Date()
-        });
-        console.log("Score saved successfully");
-    }catch(error){
-        alert("Error saving score: "+error.message);
-    }
-};
 </script>
 
 </body>
 </html>
-
-
