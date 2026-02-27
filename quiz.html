@@ -212,24 +212,22 @@ async function finishQuiz(){
     if(rank===2) certClass="silver";
     if(rank===3) certClass="bronze";
 
-    document.getElementById("mainContent").innerHTML=`
-        <div class="certificate ${certClass}">
-            <div class="cert-title">Certificate of Academic Achievement</div>
-            <p>This certifies that</p>
-            <div class="cert-name">${username}</div>
-            <p>has successfully completed the German Unification Academic Quiz</p>
-            <p><strong>Score:</strong> ${score}/${quizQuestions.length}</p>
-            <p><strong>Time Taken:</strong> ${minutes}m ${seconds}s</p>
-            <div class="rank-text">Rank Achieved: ${rank}</div>
-            <div class="signature">
-                <div>German Unification Quiz Authority</div>
-                <div>${new Date().toLocaleDateString()}</div>
-            </div>
+document.getElementById("mainContent").innerHTML=`
+    <div class="certificate ${certClass}">
+        <div class="cert-title">Certificate of Academic Achievement</div>
+        <p>This certifies that</p>
+        <div class="cert-name">${username}</div>
+        <p>has successfully completed the German Unification Academic Quiz</p>
+        <p><strong>Score:</strong> ${score}/${quizQuestions.length}</p>
+        <p><strong>Time Taken:</strong> ${minutes}m ${seconds}s</p>
+        <div class="rank-text">Rank Achieved: ${rank}</div>
+        <foot> 
+        <p> This certificate is approved by the German Unification Quiz Association </p>
+        </foot>
         </div>
         <button onclick="printCertificate()">Print Certificate</button>
         <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
-    `;
-
+`;
     megaConfetti();
 }
 
@@ -312,6 +310,7 @@ window.getLeaderboard=async function(){
 
 </body>
 </html>
+
 
 
 
