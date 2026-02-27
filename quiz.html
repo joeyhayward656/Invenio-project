@@ -23,7 +23,11 @@ body{
         #330000 85%,
         #000000 100%
     );
-    min-height: 100vh;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;   /* TRUE vertical center */
 }
 
 body::after {
@@ -42,13 +46,17 @@ body::after {
 
 .container{
     background:white;
-    width:90%;
-    max-width:750px;
-    padding:40px;
-    border-radius:20px;
-    box-shadow:0 25px 60px rgba(0,0,0,0.4);
+    width:92%;
+    max-width:1000px;        /* Bigger on laptops */
+    min-height:500px;        /* Makes it feel more dominant */
+    padding:60px 50px;       /* More breathing room */
+    border-radius:25px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.45);
     text-align:center;
-    margin:60px auto;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;  /* Vertical centering inside box */
 }
 
 .progress-bar{
@@ -391,3 +399,4 @@ loadQuestion();
 
 </body>
 </html>
+
