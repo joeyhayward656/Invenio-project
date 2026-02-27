@@ -8,14 +8,19 @@
 
 <style>
 body{
-    margin:0;
-    font-family:'Poppins',sans-serif;
+    background: linear-gradient(
+        to bottom,
+        #ffffff 0%,
+        #f5b5b5 30%,
+        #cc0000 60%,
+        #330000 85%,
+        #000000 100%
+    );
     min-height:100vh;
-    background: linear-gradient(135deg, #000000, #dd0000, #ffce00);
     display:flex;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
+    font-family:'Poppins',sans-serif;
 }
 
 .container{
@@ -166,6 +171,7 @@ button:hover{
 
 <table>
 <thead>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 <tr>
 <th>Rank</th>
 <th>Username</th>
@@ -289,4 +295,5 @@ if(userRank>0 && userRank<=3){
 </script>
 
 </body>
+
 </html>
